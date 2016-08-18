@@ -1,12 +1,16 @@
+/**
+ * Created by paul.watkinson on 14/12/2015.
+ */
+
 'use strict';
 
-var util = require('util');
+const util = require('util');
 
 /**
  * @constructor TypeOf
  * @extends Object
  */
-function TypeOf() {
+var TypeOf = function() {
     if (!(this instanceof TypeOf)) {
         return new TypeOf();
     }
@@ -28,7 +32,7 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {String} The type
          */
-        'value': function value(object) {
+        'value': function(object) {
             return Object.prototype.toString.call(object);
         }
     },
@@ -52,16 +56,12 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {String|Array} type The type to check
          * @return {Boolean}
          */
-        'value': function value(object, type) {
-            var _this = this;
-
+        'value': function(object, type) {
             if (type.indexOf('|') !== -1) {
-                return type.split('|').some(function (type) {
-                    return _this.isTypeOf(object, type);
-                });
+                return type.split('|').some((type) => this.isTypeOf(object, type));
             }
 
-            return this.getType(object) === '[object ' + type + ']';
+            return (this.getType(object) === `[object ${type}]`);
         }
     },
 
@@ -76,7 +76,7 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {Boolean}
          */
-        'value': function value(object) {
+        'value': function(object) {
             return this.getType(object) === '[object Object]';
         }
     },
@@ -92,7 +92,7 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {Boolean}
          */
-        'value': function value(object) {
+        'value': function(object) {
             return this.getType(object) === '[object Array]';
         }
     },
@@ -108,7 +108,7 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {Boolean}
          */
-        'value': function value(object) {
+        'value': function(object) {
             return this.getType(object) === '[object String]';
         }
     },
@@ -124,7 +124,7 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {Boolean}
          */
-        'value': function value(object) {
+        'value': function(object) {
             return this.getType(object) === '[object Number]';
         }
     },
@@ -140,7 +140,7 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {Boolean}
          */
-        'value': Number.isNaN || isNaN
+        'value': Number.isNaN
     },
 
     'isUndefined': {
@@ -154,7 +154,7 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {Boolean}
          */
-        'value': function value(object) {
+        'value': function(object) {
             return this.getType(object) === '[object Undefined]';
         }
     },
@@ -170,7 +170,7 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {Boolean}
          */
-        'value': function value(object) {
+        'value': function(object) {
             return this.getType(object) === '[object Null]';
         }
     },
@@ -186,7 +186,7 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {Boolean}
          */
-        'value': function value(object) {
+        'value': function(object) {
             return this.getType(object) === '[object Function]';
         }
     },
@@ -202,7 +202,7 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {Boolean}
          */
-        'value': function value(object) {
+        'value': function(object) {
             return this.getType(object) === '[object Date]';
         }
     },
@@ -218,7 +218,7 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {Boolean}
          */
-        'value': function value(object) {
+        'value': function(object) {
             return this.getType(object) === '[object RegExp]';
         }
     },
@@ -234,8 +234,11 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {Boolean}
          */
-        'value': function value(object) {
-            return object === Infinity || object === -Infinity;
+        'value': function(object) {
+            return (
+                object === Infinity ||
+                object === -Infinity
+            );
         }
     },
 
@@ -250,7 +253,7 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {Boolean}
          */
-        'value': function value(object) {
+        'value': function(object) {
             return this.getType(object) === '[object Boolean]';
         }
     },
@@ -266,8 +269,11 @@ Object.defineProperties(TypeOf.prototype, {
          * @param {*} object The object to test
          * @return {Boolean}
          */
-        'value': function value(object) {
-            return !(this.isUndefined(object) || this.isNull(object));
+        'value': function(object) {
+            return !(
+                this.isUndefined(object) ||
+                this.isNull(object)
+            );
         }
     }
 });
